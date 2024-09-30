@@ -63,11 +63,39 @@ void Min(T1 a, T2 b) {
 	}
 }
 
+int comparison(int normalSalary, int SpecialSalary,int totalNS , int totalSS, int timeH) {
+
+	timeH++;
+
+	if (timeH == 1)
+	{
+		SpecialSalary = 100;
+
+		printf("一般的な賃金体系 : 再帰的な賃金体系\n");
+	}
+	else
+	{
+		SpecialSalary = SpecialSalary * 2 - 50;
+	}
+
+	totalNS += normalSalary;
+
+	totalSS += SpecialSalary;
+
+	printf("%d : %d\n", totalNS, totalSS);
+
+	if (totalNS < totalSS) {
+		return timeH;
+	}
+	else
+	{
+		comparison(normalSalary, SpecialSalary, totalNS, totalSS, timeH);
+	}
+}
+
 int main() {
 
-	Min<int, double>(10, 9.0);
-
-	Min<char, int>('a', 9);
+	printf("%d", comparison(1072,0,0,0,0));
 
 	return 0;
 }
