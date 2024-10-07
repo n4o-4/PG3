@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <iostream>
+#include <string>
+#include <Windows.h>
+#include <time.h>
 
 template <typename T1, typename T2>
 
@@ -93,9 +96,65 @@ int comparison(int normalSalary, int SpecialSalary,int totalNS , int totalSS, in
 	}
 }
 
-int main() {
+void setTimeout(int frame) {
+	Sleep(frame);
+}
 
-	printf("%d", comparison(1072,0,0,0,0));
+void RandomDice()
+{
+	srand(static_cast<unsigned int>(time(0)));
+
+	std::string input;
+
+	printf("ダイスの出目が偶数か奇数か入力してください\n");
+
+	std::getline(std::cin, input);
+
+	int diceNum = [=]() {return rand() % 6 + 1; }();
+
+	setTimeout(1800);
+
+	if (input == "偶数")
+	{
+
+		if (diceNum % 2 == 0)
+		{
+			printf("正解です！\n");
+
+			printf("数字は%dでした\n\n",diceNum);
+		}
+		else
+		{
+			printf("不正解です\n");
+
+			printf("数字は%dでした\n\n",diceNum);
+		}
+	}
+	else if (input == "奇数")
+	{
+		if (diceNum % 2 == 0) {
+			printf("不正解です");
+
+			printf("数字は%dでした\n\n",diceNum);
+		}
+		else
+		{
+			printf("正解です！\n");
+
+			printf("数字は%dでした\n\n",diceNum);
+		}
+	}
+
+	RandomDice();
+}
+
+int main(void)
+{
+	void(*pfunc)();
+
+	pfunc = RandomDice;
+
+	pfunc();
 
 	return 0;
 }
