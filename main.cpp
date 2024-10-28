@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <time.h>
 
+
 template <typename T1, typename T2>
 
 void Min(T1 a, T2 b) {
@@ -148,13 +149,70 @@ void RandomDice()
 	RandomDice();
 }
 
+class Enemy
+{
+public:
+	void phaseApproach();
+	void phaseFire();
+	void phaseLeave();
+
+	void Update();
+private:
+	static void (Enemy::* spFuncTable[])();
+
+	enum Phase {
+		Approach,
+		Fire,
+		Leave,
+	};
+
+	Phase phase_ = Phase::Approach;
+
+};
+
+void (Enemy::* Enemy::spFuncTable[])() = {
+	&Enemy::phaseApproach,
+	&Enemy::phaseFire,
+	&Enemy::phaseLeave
+};
+
+void Enemy::phaseApproach()
+{
+
+	printf("敵が近づいてきた!!\n\n");
+
+	phase_ = Phase::Fire;
+}
+
+void Enemy::phaseFire()
+{
+
+	printf("敵が弾を発射!!!\n\n");
+
+	phase_ = Phase::Leave;
+
+}
+
+void Enemy::phaseLeave()
+{
+
+	printf("敵は離れていった...\n\n");
+
+}
+
+void Enemy::Update()
+{
+
+	(this->*spFuncTable[static_cast<size_t>(phase_)])();
+
+}
+
+Enemy enemy;
+
 int main(void)
 {
-	void(*pfunc)();
 
-	pfunc = RandomDice;
-
-	pfunc();
-
-	return 0;
+	enemy.Update();
+	enemy.Update();
+	enemy.Update();
 }
