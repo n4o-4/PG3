@@ -236,31 +236,104 @@ public:
 		}
 	}
 };
+class  Language{
+public:
+	Language()
+	{
+	}
+
+	~Language()
+	{
+	}
+
+	virtual void Greeting()
+	{
+
+	}
+};
+
+class Japanese : public Language
+{
+public:
+
+	Japanese()
+	{
+
+	}
+
+	~Japanese()
+	{
+
+	}
+
+	void Greeting() override {
+
+		printf("おはよう\n");
+
+	}
+};
+
+class English : public Language
+{
+public:
+
+	English()
+	{
+
+	}
+
+	~English()
+	{
+
+	}
+
+	void Greeting() override {
+
+		printf("good morning\n");
+
+	}
+};
+
+class Chainese : public Language
+{
+public:
+
+	Chainese()
+	{
+
+	}
+
+	~Chainese()
+	{
+
+	}
+
+	void Greeting() override {
+
+		printf("早上好\n");
+
+	}
+};
 
 int main(void)
 {
-	
-	Diff<int,int> a1(10, 20);
 
-	a1.Min();
+	Language* language[3];
+	language[0] = new Japanese();
+	language[1] = new English();
+	language[2] = new Chainese();
 
-	Diff<int, float> a2(5, 10.0f);
+	for (int i = 0; i < 3; ++i)
+	{
 
-	a2.Min();
+		language[i]->Greeting();
 
-	Diff<int, double> a3(10, 10.1l);
+	}
 
-	a3.Min();
+	for (int i = 0; i < 3; ++i)
+	{
 
-	Diff<float, float> b1(10.5f, 10.7f);
+		delete language[i];
 
-	b1.Min();
-
-	Diff<float, double> b2(10.1f, 10.09l);
-
-	b2.Min();
-
-	Diff<double, double> c1(10.039l, 10.041l);
-
-	c1.Min();
+	}
 }
