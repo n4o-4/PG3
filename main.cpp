@@ -236,35 +236,15 @@ public:
 		}
 	}
 };
-class  Language{
+class  ILanguage{
 public:
-	Language()
-	{
-	}
-
-	~Language()
-	{
-	}
-
-	virtual void Greeting()
-	{
-
-	}
+	
+	virtual void Greeting() = 0;
 };
 
-class Japanese : public Language
+class Japanese : public ILanguage
 {
 public:
-
-	Japanese()
-	{
-
-	}
-
-	~Japanese()
-	{
-
-	}
 
 	void Greeting() override {
 
@@ -273,19 +253,9 @@ public:
 	}
 };
 
-class English : public Language
+class English : public ILanguage
 {
 public:
-
-	English()
-	{
-
-	}
-
-	~English()
-	{
-
-	}
 
 	void Greeting() override {
 
@@ -294,19 +264,9 @@ public:
 	}
 };
 
-class Chainese : public Language
+class Chainese : public ILanguage
 {
 public:
-
-	Chainese()
-	{
-
-	}
-
-	~Chainese()
-	{
-
-	}
 
 	void Greeting() override {
 
@@ -318,7 +278,7 @@ public:
 int main(void)
 {
 
-	Language* language[3];
+	ILanguage* language[3];
 	language[0] = new Japanese();
 	language[1] = new English();
 	language[2] = new Chainese();
