@@ -3,7 +3,8 @@
 #include <string>
 #include <Windows.h>
 #include <time.h>
-
+#include <algorithm>
+#include <type_traits>
 
 template <typename T1, typename T2>
 
@@ -207,12 +208,59 @@ void Enemy::Update()
 
 }
 
-Enemy enemy;
+template <typename Type1, typename Type2>
+
+class Diff {
+public:
+	Type1 num1;
+	Type2 num2;
+
+	Diff(Type1 num1, Type2 num2) : num1(num1), num2(num2) {}
+
+	void Min() {
+
+		auto minNum = (num1 < num2) ? num1 : num2;
+
+		if constexpr (std::is_same_v<decltype(minNum), int>) {
+			printf("%d\n", minNum);
+		}
+		else if constexpr (std::is_same_v<decltype(minNum), float>) {
+			printf("%f\n", minNum);
+		}
+		else if constexpr (std::is_same_v<decltype(minNum), double>) {
+			printf("%lf\n", minNum);
+		}
+		else {
+			// 型が int, float, double でない場合の処理
+			printf("Unsupported type\n");
+		}
+	}
+};
 
 int main(void)
 {
+	
+	Diff<int,int> a1(10, 20);
 
-	enemy.Update();
-	enemy.Update();
-	enemy.Update();
+	a1.Min();
+
+	Diff<int, float> a2(5, 10.0f);
+
+	a2.Min();
+
+	Diff<int, double> a3(10, 10.1l);
+
+	a3.Min();
+
+	Diff<float, float> b1(10.5f, 10.7f);
+
+	b1.Min();
+
+	Diff<float, double> b2(10.1f, 10.09l);
+
+	b2.Min();
+
+	Diff<double, double> c1(10.039l, 10.041l);
+
+	c1.Min();
 }
