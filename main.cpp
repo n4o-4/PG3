@@ -6,6 +6,10 @@
 #include <algorithm>
 #include <type_traits>
 
+#include <stdlib.h>
+#include <vector>
+#include <list>
+
 template <typename T1, typename T2>
 
 void Min(T1 a, T2 b) {
@@ -236,35 +240,15 @@ public:
 		}
 	}
 };
-class  Language{
+class  ILanguage{
 public:
-	Language()
-	{
-	}
-
-	~Language()
-	{
-	}
-
-	virtual void Greeting()
-	{
-
-	}
+	
+	virtual void Greeting() = 0;
 };
 
-class Japanese : public Language
+class Japanese : public ILanguage
 {
 public:
-
-	Japanese()
-	{
-
-	}
-
-	~Japanese()
-	{
-
-	}
 
 	void Greeting() override {
 
@@ -273,19 +257,9 @@ public:
 	}
 };
 
-class English : public Language
+class English : public ILanguage
 {
 public:
-
-	English()
-	{
-
-	}
-
-	~English()
-	{
-
-	}
 
 	void Greeting() override {
 
@@ -294,19 +268,9 @@ public:
 	}
 };
 
-class Chainese : public Language
+class Chainese : public ILanguage
 {
 public:
-
-	Chainese()
-	{
-
-	}
-
-	~Chainese()
-	{
-
-	}
 
 	void Greeting() override {
 
@@ -315,25 +279,96 @@ public:
 	}
 };
 
-int main(void)
+using namespace std;
+
+struct Station
+{
+	const char* name;
+};
+
+void InsertNewStation(std::list<Station>& stations,const char* targetStation,const char* newStation)
 {
 
-	Language* language[3];
-	language[0] = new Japanese();
-	language[1] = new English();
-	language[2] = new Chainese();
+	std::list<Station>::iterator it;
 
-	for (int i = 0; i < 3; ++i)
+	for (it = stations.begin(); it != stations.end(); ++it)
 	{
+		if (strcmp(it->name, targetStation) == 0)
+		{
 
-		language[i]->Greeting();
+			stations.insert(std::next(it), { newStation });
 
+			return;
+		}
 	}
 
-	for (int i = 0; i < 3; ++i)
+}
+
+int main()
+{
+
+	std::list<Station> stations = {
+	{"Tokyo"},
+	{"Kanda"},
+	{"Akihabara"},
+	{"Okachimachi"},
+	{"Ueno"},
+	{"Uguisudani"},
+	{"Nippori"},
+	{"Tabata"},
+	{"Komagome"},
+
+	{"Sugamo"},
+	{"Otuka"},
+	{"Ikebukuro"},
+	{"Mejiro"},
+	{"Takadanobaba"},
+	{"Shin-Okubo"},
+	{"Shinjuku"},
+	{"Yoyogi"},
+	{"Harajuku"},
+	{"Shibuya"},
+
+	{"Ebisu"},
+	{"Meguro"},
+	{"Gotanda"},
+	{"Osaki"},
+	{"Shinagawa"},
+	{"Tamachi"},
+	{"Hamamatsucho"},
+	{"Shinbashi"},
+	{"Yurakucho"}
+	};
+
+	printf("1970年\n\n");
+
+	for (const Station& station : stations)
 	{
+		printf(station.name);
 
-		delete language[i];
-
+		printf("\n");
 	}
+
+	InsertNewStation(stations, "Nippori", "Nishi-Nippori");
+
+	printf("\n2019年\n\n");
+
+	for (const Station& station : stations)
+	{
+		printf(station.name);
+
+		printf("\n");
+	}
+
+	InsertNewStation(stations, "Shinagawa", "Takawa Gateway");
+
+	printf("\n2022年\n\n");
+
+	for (const Station& station : stations)
+	{
+		printf(station.name);
+
+		printf("\n");
+	}
+
 }
