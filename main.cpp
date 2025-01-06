@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <list>
+#include <thread>
 
 template <typename T1, typename T2>
 
@@ -304,71 +305,20 @@ void InsertNewStation(std::list<Station>& stations,const char* targetStation,con
 
 }
 
+void Print(int num)
+{
+	printf("thread%d\n", num);
+}
+
 int main()
 {
+	std::thread th1(Print, 1);
+	std::thread th2(Print, 2);
+	std::thread th3(Print, 3);
 
-	std::list<Station> stations = {
-	{"Tokyo"},
-	{"Kanda"},
-	{"Akihabara"},
-	{"Okachimachi"},
-	{"Ueno"},
-	{"Uguisudani"},
-	{"Nippori"},
-	{"Tabata"},
-	{"Komagome"},
+	th1.join();
+	th2.join();
+	th3.join();
 
-	{"Sugamo"},
-	{"Otuka"},
-	{"Ikebukuro"},
-	{"Mejiro"},
-	{"Takadanobaba"},
-	{"Shin-Okubo"},
-	{"Shinjuku"},
-	{"Yoyogi"},
-	{"Harajuku"},
-	{"Shibuya"},
-
-	{"Ebisu"},
-	{"Meguro"},
-	{"Gotanda"},
-	{"Osaki"},
-	{"Shinagawa"},
-	{"Tamachi"},
-	{"Hamamatsucho"},
-	{"Shinbashi"},
-	{"Yurakucho"}
-	};
-
-	printf("1970年\n\n");
-
-	for (const Station& station : stations)
-	{
-		printf(station.name);
-
-		printf("\n");
-	}
-
-	InsertNewStation(stations, "Nippori", "Nishi-Nippori");
-
-	printf("\n2019年\n\n");
-
-	for (const Station& station : stations)
-	{
-		printf(station.name);
-
-		printf("\n");
-	}
-
-	InsertNewStation(stations, "Shinagawa", "Takawa Gateway");
-
-	printf("\n2022年\n\n");
-
-	for (const Station& station : stations)
-	{
-		printf(station.name);
-
-		printf("\n");
-	}
-
+	return 0;
 }
