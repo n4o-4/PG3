@@ -329,11 +329,11 @@ int main()
 	auto endMove = std::chrono::high_resolution_clock::now();
 
 	// コピーとムーブにかかった時間を表示
-	auto copyDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(endCopy - startCopy).count();
-	auto moveDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(endMove - startMove).count();
+	auto copyDuration = std::chrono::duration_cast<std::chrono::microseconds>(endCopy - startCopy).count();
+	auto moveDuration = std::chrono::duration_cast<std::chrono::microseconds>(endMove - startMove).count();
 
-	std::cout << "Copy duration: " << copyDuration << " nanoseconds\n";
-	std::cout << "Move duration: " << moveDuration << " nanoseconds\n";
+	std::cout << "Copy duration: " << copyDuration << " microseconds\n";
+	std::cout << "Move duration: " << moveDuration << " microseconds\n";
 
 	return 0;
 }
