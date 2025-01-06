@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #include <vector>
 #include <list>
+#include <thread>
+#include <chrono>
+
 
 template <typename T1, typename T2>
 
@@ -304,71 +307,33 @@ void InsertNewStation(std::list<Station>& stations,const char* targetStation,con
 
 }
 
+void Print(int num)
+{
+	printf("thread%d\n", num);
+}
+
 int main()
 {
 
-	std::list<Station> stations = {
-	{"Tokyo"},
-	{"Kanda"},
-	{"Akihabara"},
-	{"Okachimachi"},
-	{"Ueno"},
-	{"Uguisudani"},
-	{"Nippori"},
-	{"Tabata"},
-	{"Komagome"},
+	// 大きな文字列を生成
+    std::string str(1000000, 'a');
 
-	{"Sugamo"},
-	{"Otuka"},
-	{"Ikebukuro"},
-	{"Mejiro"},
-	{"Takadanobaba"},
-	{"Shin-Okubo"},
-	{"Shinjuku"},
-	{"Yoyogi"},
-	{"Harajuku"},
-	{"Shibuya"},
+	// コピー処理の時間を計測
+	auto startCopy = std::chrono::high_resolution_clock::now();
+	std::string str1 = str;
+	auto endCopy = std::chrono::high_resolution_clock::now();
 
-	{"Ebisu"},
-	{"Meguro"},
-	{"Gotanda"},
-	{"Osaki"},
-	{"Shinagawa"},
-	{"Tamachi"},
-	{"Hamamatsucho"},
-	{"Shinbashi"},
-	{"Yurakucho"}
-	};
+	// ムーブ処理の時間を計測
+	auto startMove = std::chrono::high_resolution_clock::now();
+	std::string str2 = std::move(str);
+	auto endMove = std::chrono::high_resolution_clock::now();
 
-	printf("1970年\n\n");
+	// コピーとムーブにかかった時間を表示
+	auto copyDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(endCopy - startCopy).count();
+	auto moveDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(endMove - startMove).count();
 
-	for (const Station& station : stations)
-	{
-		printf(station.name);
+	std::cout << "Copy duration: " << copyDuration << " nanoseconds\n";
+	std::cout << "Move duration: " << moveDuration << " nanoseconds\n";
 
-		printf("\n");
-	}
-
-	InsertNewStation(stations, "Nippori", "Nishi-Nippori");
-
-	printf("\n2019年\n\n");
-
-	for (const Station& station : stations)
-	{
-		printf(station.name);
-
-		printf("\n");
-	}
-
-	InsertNewStation(stations, "Shinagawa", "Takawa Gateway");
-
-	printf("\n2022年\n\n");
-
-	for (const Station& station : stations)
-	{
-		printf(station.name);
-
-		printf("\n");
-	}
-
+	return 0;
 }
